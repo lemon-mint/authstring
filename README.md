@@ -1,5 +1,8 @@
 # AuthString
 
+[![GitHub](https://img.shields.io/github/license/lemon-mint/authstring?style=for-the-badge)](https://github.com/lemon-mint/authstring/blob/main/LICENSE)
+[![Go Reference](https://img.shields.io/badge/go-reference-%23007d9c?style=for-the-badge&logo=go)](https://pkg.go.dev/github.com/lemon-mint/authstring)
+
 Password Hashing Library
 
 ## Usage
@@ -30,4 +33,4 @@ func main() {
 }
 ```
 
-[Go Playground](https://go.dev/play/p/8j05O7Hg__g?v=gotip)
+[![Go Playground](https://img.shields.io/badge/go-playground-%23007d9c?style=for-the-badge&logo=go)](https://go.dev/play/p/8j05O7Hg__g?v=gotip)
