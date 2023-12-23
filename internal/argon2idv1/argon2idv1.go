@@ -41,7 +41,7 @@ func (a Argon2ID_v1) Hash(password []byte) []byte {
 	osalt := output[2 : 2+_salt]
 	ohash := output[2+_salt : 2+_salt+_hash]
 
-	binary.LittleEndian.PutUint16(output[0:2], uint16(_hash))
+	binary.LittleEndian.PutUint16(output[0:2], uint16(Algorithm))
 	randpool.CSPRNG_RAND(osalt)
 	bhash := argon2.IDKey(password, output[2:2+_salt], _iterations, _memory, _parallelism, _hash)
 	copy(ohash, bhash)
@@ -54,19 +54,19 @@ func (a Argon2ID_v1) Verify(hash []byte, password []byte) bool {
 		return false
 	}
 
-	if binary.LittleEndian.Uint16(hash[0:2]) != uint16(_hash) {
+	if binary.LittleEndian.Uint16(hash[0:2]) != uint16(Algorithm) {
 		return false
 	}
 
-	isalt := hash[2 : 2+_salt]
-	ihash := hash[2+_salt : 2+_salt+_hash]
+	osalt := hash[2 : 2+_salt]
+	ohash := hash[2+_salt : 2+_salt+_hash]
 
-	bhash := argon2.IDKey(password, isalt, _iterations, _memory, _parallelism, _hash)
+	bhash := argon2.IDKey(password, osalt, _iterations, _memory, _parallelism, _hash)
 	if bhash == nil {
 		return false
 	}
 
-	if subtle.ConstantTimeCompare(ihash, bhash) == 1 {
+	if subtle.ConstantTimeCompare(ohash, bhash) == 1 {
 		return true
 	}
 
@@ -74,3 +74,5 @@ func (a Argon2ID_v1) Verify(hash []byte, password []byte) bool {
 }
 
 var _ algs.Algorithm = (*Argon2ID_v1)(nil)
+
+var Inst Argon2ID_v1
