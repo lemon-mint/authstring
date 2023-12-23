@@ -1,0 +1,2 @@
+# authstring
+Password Hashing Library
